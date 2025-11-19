@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Šikmý vrh</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        canvas { border: 1px solid black; display: block; margin-top: 20px; }
+        .outputs { margin-top: 15px; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <label>Úhel (°):
+            <input type="number" id="angle" value="45">
+        </label>
+        <label>Rychlost (m/s):
+            <input type="number" id="velocity" value="20">
+        </label>
+        <label>Výška (m):
+            <input type="number" id="height" value="100">
+        </label>
+        <button id="drawBtn">Vykreslit</button>
+    </div>
+
+    <canvas></canvas>
+
+    <div class="outputs">
+        <p><b>Maximální výška:</b> <span id="maxHeight">–</span></p>
+        <p><b>Dopadová vzdálenost:</b> <span id="maxDistance">–</span></p>
+        <p><b>Dopadová optimální vzdálenost:</b> <span id="optDistance">–</span></p>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
