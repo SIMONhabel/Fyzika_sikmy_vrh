@@ -1,8 +1,8 @@
 const canvas = document.querySelector("canvas");
 const brush = canvas.getContext("2d");
 
-canvas.width = 820;
-canvas.height = 640;
+canvas.width = 720;
+canvas.height = 540;
 
 const g = 9.8;
 
@@ -14,6 +14,7 @@ const button = document.getElementById("drawBtn");
 
 const maxHeightOut = document.getElementById("maxHeight");
 const maxDistanceOut = document.getElementById("maxDistance");
+const optDistance = document.getElementById("optDistance");
 
 let velocity = 20;
 let angle = Math.PI / 4;
@@ -30,6 +31,17 @@ function calcY(t,a) {
 
 function optimal_angle(){
     return Math.acos((g * height) / (Math.pow(velocity, 2) + g * height)) / 2;
+}
+
+function calcTime(velocity, angle, height) {
+    const vy = velocity * Math.sin(angle);
+    const D = Math.sqrt(
+        Math.pow(vy, 2) + (2 * g * height)
+    );
+    const t1 = (-vy + D) / (-g);
+    const t2 = (-vy - D) / (-g);
+    const t = Math.max(t1, t2);
+    return t > 0 ? t : null;
 }
 
 function draw() {
@@ -54,7 +66,7 @@ function draw() {
 
         if (y < 0) {
             landingPoint = { x, y: 0 };
-            maxXValue = x;
+            maxXValue = calcX(calcTime(velocity, angle, height), angle);
             break;
         }
 
@@ -70,7 +82,7 @@ function draw() {
 
     maxHeightOut.textContent = maxYValue.toFixed(2) + " m";
     maxDistanceOut.textContent = maxXValue.toFixed(2) + " m";
-
+    optDistance.textContent = calcX(calcTime(velocity, angle, height), optAngle).toFixed(2) + " m";
 
     brush.clearRect(0, 0, canvas.width, canvas.height);
     brush.beginPath();
